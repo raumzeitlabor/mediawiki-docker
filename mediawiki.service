@@ -1,0 +1,21 @@
+[Unit]
+Description=Mediawiki
+After=docker.service mysql.service
+Requires=mysql.service
+
+[Service]
+Restart=always
+KillMode=control-group
+ExecStartPre=-/usr/bin/docker run --name=mediawiki-data -v /data \
+    raumzeitlabor/mediawiki-docker echo "data-only container for mediawiki"
+ExecStart=/usr/bin/docker run --name=mediawiki-web --detach=false --cpu-shares=512 \
+    --memory=512M --mac-address=5a:f0:46:a3:fd:9a --publish=127.0.0.1:8081:80 \
+    --rm=true --env=VIRTUAL_HOST=wiki.raumzeitlabor.de,w.rzl.so \
+    --volumes-from=mediawiki-data \
+    --hostname=mediawiki-web \
+    --link=mysql:mysql \
+    raumzeitlabor/mediawiki-docker
+ExecStop=/usr/bin/docker pull raumzeitlabor/mediawiki-docker:latest
+
+[Install]
+WantedBy=multi-user.target
