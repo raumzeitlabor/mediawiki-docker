@@ -12,7 +12,7 @@ RUN \
     echo "Europe/Berlin" > /etc/timezone && dpkg-reconfigure tzdata ;\
     locale-gen en_US.UTF-8 en_DK.UTF-8 de_DE.UTF-8 ;\
     apt-get -q -y update ;\
-    apt-get install -y nginx-light \
+    apt-get install -y aria2c nginx-light \
         php5-fpm \
         php5-mysql \
         php5-imagick \
@@ -43,10 +43,8 @@ RUN chmod +x /etc/service/php5-fpm/run
 ADD nginx-site.conf /etc/nginx/sites-available/default
 #ADD https://github.com/raumzeitlabor/logstash-docker/raw/master/logstash-fwd.conf /etc/syslog-ng/conf.d/
 
-# TODO: verify
-ADD https://releases.wikimedia.org/mediawiki/1.23/mediawiki-1.23.8.tar.gz /tmp
-
 RUN \
+    cd /tmp && aria2c -s 4 https://releases.wikimedia.org/mediawiki/1.23/mediawiki-1.23.8.tar.gz ;\
     mkdir /data && cd /data ;\
     tar xvzf /tmp/mediawiki-1.23.8.tar.gz --strip-components=1 -C /data ;\
     rm /tmp/mediawiki-1.23.8.tar.gz
