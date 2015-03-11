@@ -12,7 +12,7 @@ RUN \
     echo "Europe/Berlin" > /etc/timezone && dpkg-reconfigure tzdata ;\
     locale-gen en_US.UTF-8 en_DK.UTF-8 de_DE.UTF-8 ;\
     apt-get -q -y update ;\
-    apt-get install -y aria2 nginx-light \
+    apt-get install -y aria2 nginx-light graphviz graphviz-dev \
         php5-fpm \
         php5-mysql \
         php5-imagick \
