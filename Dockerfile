@@ -12,7 +12,7 @@ RUN \
     echo "Europe/Berlin" > /etc/timezone && dpkg-reconfigure tzdata ;\
     locale-gen en_US.UTF-8 en_DK.UTF-8 de_DE.UTF-8 ;\
     apt-get -q -y update ;\
-    apt-get install -y aria2 nginx-light graphviz graphviz-dev \
+    apt-get install -y aria2 nginx-light graphviz graphviz-dev mysql-client \
         php5-fpm \
         php5-mysql \
         php5-imagick \
@@ -47,13 +47,16 @@ RUN \
     cd /tmp && aria2c -s 4 https://releases.wikimedia.org/mediawiki/1.23/mediawiki-1.23.8.tar.gz ;\
     mkdir /data && cd /data ;\
     tar xvzf /tmp/mediawiki-1.23.8.tar.gz --strip-components=1 -C /data ;\
-    rm /tmp/mediawiki-1.23.8.tar.gz
+    rm /tmp/mediawiki-1.23.8.tar.gz ;\
+    mkdir /data/backup
 
 ADD docker-entrypoint.sh /etc/rc.local
+ADD backup-mysql.sh /etc/cron.daily/backup-mysql
 
 RUN sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php5/fpm/php.ini ;\
     php5dismod xdebug ;\
     chown www-data /data/images ;\
-    chmod +x /etc/rc.local
+    chmod +x /etc/rc.local ;\
+    chmod +x /etc/cron.daily/backup-mysql
 
 EXPOSE 80
