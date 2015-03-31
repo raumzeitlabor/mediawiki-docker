@@ -44,7 +44,7 @@ ADD nginx-site.conf /etc/nginx/sites-available/default
 #ADD https://github.com/raumzeitlabor/logstash-docker/raw/master/logstash-fwd.conf /etc/syslog-ng/conf.d/
 
 RUN \
-    cd /tmp && aria2c -s 4 https://releases.wikimedia.org/mediawiki/1.23/mediawiki-1.23.8.tar.gz ;\
+    cd /tmp && aria2c -s 4 https://releases.wikimedia.org/mediawiki/1.23/mediawiki-1.23.9.tar.gz ;\
     mkdir /data && cd /data ;\
     tar xvzf /tmp/mediawiki-1.23.8.tar.gz --strip-components=1 -C /data ;\
     rm /tmp/mediawiki-1.23.8.tar.gz ;\
