@@ -21,6 +21,6 @@ chmod 600 $TARGET_DIR/*.sql.xz
 
 echo "Purging old backups…"
 
-find $TARGET_DIR -type f -mtime +13 -exec rm -v {} \;
+find $TARGET_DIR -type f -mtime +$DAYS_TO_KEEP -exec rm -v {} \;
 
 echo "done!"

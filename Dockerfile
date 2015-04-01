@@ -45,10 +45,16 @@ ADD nginx-site.conf /etc/nginx/sites-available/default
 
 RUN \
     cd /tmp && aria2c -s 4 https://releases.wikimedia.org/mediawiki/1.23/mediawiki-1.23.9.tar.gz ;\
-    mkdir /data && cd /data ;\
-    tar xvzf /tmp/mediawiki-1.23.8.tar.gz --strip-components=1 -C /data ;\
-    rm /tmp/mediawiki-1.23.8.tar.gz ;\
-    mkdir /data/backup
+    mkdir /usr/share/mediawiki ;\
+    tar xvzf /tmp/mediawiki-1.23.9.tar.gz --strip-components=1 -C /usr/share/mediawiki ;\
+    rm -rf /usr/share/mediawiki/extensions /usr/share/mediawiki/images /tmp/mediawiki-1.23.9.tar.gz
+
+RUN \
+    mkdir /data /data/conf /data/images /data/extensions /data/backup ;\
+    ln -s /data/images /usr/share/mediawiki/images ;\
+    ln -s /data/extensions /usr/share/mediawiki/extensions ;\
+    chown -R www-data /usr/share/mediawiki/images /usr/share/mediawiki/extensions ;\
+    touch /data/conf/LocalSettings.php && ln -s /data/conf/LocalSettings.php /usr/share/mediawiki && rm /data/conf/LocalSettings.php
 
 ADD docker-entrypoint.sh /etc/rc.local
 ADD backup-mysql.sh /etc/cron.daily/backup-mysql
