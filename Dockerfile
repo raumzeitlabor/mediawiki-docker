@@ -53,7 +53,7 @@ RUN \
     mkdir /data /data/conf /data/images /data/extensions /data/backup ;\
     ln -s /data/images /usr/share/mediawiki/images ;\
     ln -s /data/extensions /usr/share/mediawiki/extensions ;\
-    chown -R www-data /usr/share/mediawiki/images /usr/share/mediawiki/extensions ;\
+    chown -R www-data /usr/share/mediawiki/images ;\
     touch /data/conf/LocalSettings.php && ln -s /data/conf/LocalSettings.php /usr/share/mediawiki && rm /data/conf/LocalSettings.php
 
 ADD docker-entrypoint.sh /etc/rc.local
