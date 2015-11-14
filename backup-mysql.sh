@@ -6,10 +6,10 @@ DAYS_TO_KEEP=$(( 14 - 1))
 TARGET_DIR=/data/backup
 
 # *sigh*
-MYSQL_DB=$(php5 -r "$(grep wgDBname  /data/LocalSettings.php; echo 'print $wgDBname;';)")
-MYSQL_HOST=$(php5 -r "$(grep wgDBserver /data/LocalSettings.php; echo 'print $wgDBserver;';)")
-MYSQL_USER=$(php5 -r "$(grep wgDBadmin /data/LocalSettings.php; echo 'print $wgDBadminuser;';)")
-MYSQL_PASSWD=$(php5 -r "$(grep wgDBadmin /data/LocalSettings.php; echo 'print $wgDBadminpassword;';)")
+MYSQL_DB=$(php5 -r "$(grep wgDBname  /data/conf/LocalSettings.php; echo 'print $wgDBname;';)")
+MYSQL_HOST=$(php5 -r "$(grep wgDBserver /data/conf/LocalSettings.php; echo 'print $wgDBserver;';)")
+MYSQL_USER=$(php5 -r "$(grep wgDBuser /data/conf/LocalSettings.php; echo 'print $wgDBuser;';)")
+MYSQL_PASSWD=$(php5 -r "$(grep wgDBpassword /data/conf/LocalSettings.php; echo 'print $wgDBpassword;';)")
 
 echo "Backing up mediawiki database…"
 
