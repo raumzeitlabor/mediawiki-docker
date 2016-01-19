@@ -8,6 +8,7 @@ then
 fi
 
 find /etc/php5 -name php.ini -print0 | xargs -0 sed -i "s#;date.timezone =.*#date.timezone = $PHP_TIMEZONE#"
+find /etc/php5 -name php.ini -print0 | xargs -0 sed -i "s#upload_max_filesize = 2M#upload_max_filesize = 8M#"
 
 if [ ! -z "$DEBUG" ]
 then
